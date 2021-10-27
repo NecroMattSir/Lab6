@@ -2,7 +2,8 @@
 
 // Scene constructor, initilises OpenGL
 // You should add further variables to need initilised.
-Scene::Scene(Input *in)
+Scene::Scene(Input* in) :
+	camera(in)
 {
 	// Store pointer for input class
 	input = in;
@@ -15,6 +16,10 @@ Scene::Scene(Input *in)
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
 	// Initialise scene variables
+
+	camera.SetPos(0, 5, 8);
+	camera.SetRot(0, -30, 0);
+
 	rot = 0;
 
 	p1rot = 0;
@@ -50,6 +55,8 @@ Scene::Scene(Input *in)
 
 void Scene::handleInput(float dt)
 {
+	camera.HandleInput(dt);
+
 	// Handle user input
 	if (input->isKeyDown('o'))
 	{
@@ -67,6 +74,7 @@ void Scene::handleInput(float dt)
 void Scene::update(float dt)
 {
 	// update scene related variables.
+	camera.Update(dt);
 
 	//a
 	rot += 10 * dt;
@@ -98,7 +106,7 @@ void Scene::render() {
 	glLoadIdentity();
 	glDisable(GL_TEXTURE_2D);
 	// Set the camera
-	gluLookAt(0.0f, 5.0f, 8.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+	gluLookAt(camera.GetPosX(), camera.GetPosY(), camera.GetPosZ(), camera.GetLAX(), camera.GetLAY(), camera.GetLAZ(), camera.GetUpX(), camera.GetUpY(), camera.GetUpZ());
 	
 	// Render geometry/scene here -------------------------------------
 	

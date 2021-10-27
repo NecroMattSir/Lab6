@@ -15,6 +15,7 @@
 // Further includes should go here:
 #include "SOIL.h"
 #include <vector>
+#include "cam.h"
 
 
 class Scene{
@@ -77,6 +78,9 @@ protected:
 	//textures
 	GLuint tex1;
 	GLuint tex2;
+
+	//cam
+	cam camera;
 
 };
 
